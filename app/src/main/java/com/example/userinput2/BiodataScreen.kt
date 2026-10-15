@@ -114,3 +114,43 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                     shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_small)))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
+                ) {
+                    OutlinedTextField(
+                        value = textTglLahir,
+                        onValueChange = { textTglLahir = it },
+                        label = { Text(stringResource(id = R.string.label_tgl_lahir)) },
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.DateRange,
+                                contentDescription = stringResource(id = R.string.cd_calendar)
+                            )
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
+                    )
+                    OutlinedTextField(
+                        value = textExperience,
+                        onValueChange = { textExperience = it },
+                        label = { Text(stringResource(id = R.string.label_experience)) },
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = stringResource(id = R.string.cd_dropdown)
+                            )
+                        },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
+                    )
+                }
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_medium)))
+
+                Text(
+                    text = stringResource(id = R.string.label_pilih_skill),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = dimensionResource(id = R.dimen.font_body).value.sp,
+                    modifier = Modifier.align(Alignment.Start)
+                )
