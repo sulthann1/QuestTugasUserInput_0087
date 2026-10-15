@@ -154,3 +154,23 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                     fontSize = dimensionResource(id = R.dimen.font_body).value.sp,
                     modifier = Modifier.align(Alignment.Start)
                 )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(checked = checkAndroid, onCheckedChange = { checkAndroid = it })
+                        Text(stringResource(id = R.string.skill_android), fontSize = dimensionResource(id = R.dimen.font_body).value.sp)
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(checked = checkUiUx, onCheckedChange = { checkUiUx = it })
+                        Text(stringResource(id = R.string.skill_uiux), fontSize = dimensionResource(id = R.dimen.font_body).value.sp)
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(checked = checkWeb, onCheckedChange = { checkWeb = it })
+                        Text(stringResource(id = R.string.skill_web), fontSize = dimensionResource(id = R.dimen.font_body).value.sp)
+                    }
+                }
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_large)))
