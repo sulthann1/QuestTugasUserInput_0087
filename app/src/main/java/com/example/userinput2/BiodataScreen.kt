@@ -62,3 +62,10 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                     color = colorResource(id = R.color.purple_title)
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_small)))
+
+                Text(
+                    text = stringResource(id = R.string.form_subtitle),
+                    fontSize = dimensionResource(id = R.dimen.font_subtitle).value.sp,
+                    color = colorResource(id = R.color.gray_subtitle)
+                )
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_large)))
