@@ -174,3 +174,38 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                     }
                 }
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_large)))
+
+                Button(
+                    onClick = {
+                        val skill1 = if (checkAndroid) "Android " else ""
+                        val skill2 = if (checkUiUx) "UI/UX " else ""
+                        val skill3 = if (checkWeb) "Web" else ""
+
+                        val hasilSubmit = "Nama: $textNamaDepan $textNamaBelakang\nEmail: $textEmail\nSkill: $skill1$skill2$skill3"
+
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = hasilSubmit,
+                                duration = SnackbarDuration.Long
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(dimensionResource(id = R.dimen.button_height)),
+                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.gray_button)
+                    )
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.btn_proceed),
+                        color = colorResource(id = R.color.white_text),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = dimensionResource(id = R.dimen.font_body).value.sp
+                    )
+                }
+            }
+        }
+    }
+}
