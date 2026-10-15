@@ -15,4 +15,7 @@
     <string name="cd_background">Background Latar</string>
     <string name="cd_calendar">Ikon Kalender</string>
     <string name="cd_dropdown">Ikon Dropdown</string>
+    <string name="exp_beginner">Beginner</string>
+    <string name="exp_intermediate">Intermediate</string>
+    <string name="exp_expert">Expert</string>
 </resources>

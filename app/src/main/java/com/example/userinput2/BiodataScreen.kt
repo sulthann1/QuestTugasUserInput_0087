@@ -13,13 +13,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,7 +43,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState) {
     var textNamaDepan by remember { mutableStateOf("") }
@@ -37,12 +53,20 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
     var textEmail by remember { mutableStateOf("") }
     var textTglLahir by remember { mutableStateOf("") }
     var textExperience by remember { mutableStateOf("") }
+    var isClicked by remember { mutableStateOf(false) }
 
     var checkAndroid by remember { mutableStateOf(false) }
     var checkUiUx by remember { mutableStateOf(false) }
     var checkWeb by remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
+    var expandedExperience by remember { mutableStateOf(false) }
+
+    val experienceOptions = listOf(
+        stringResource(id = R.string.exp_beginner),
+        stringResource(id = R.string.exp_intermediate),
+        stringResource(id = R.string.exp_expert)
+    )
 
     Box(modifier = modifier.fillMaxSize()) {
         Image(
@@ -53,6 +77,7 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                 .fillMaxWidth()
                 .fillMaxHeight(fraction = 0.4f)
         )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -132,20 +157,41 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
                     )
-                    OutlinedTextField(
-                        value = textExperience,
-                        onValueChange = { textExperience = it },
-                        label = { Text(stringResource(id = R.string.label_experience)) },
-                        trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
-                                contentDescription = stringResource(id = R.string.cd_dropdown)
-                            )
-                        },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
-                    )
+
+                    ExposedDropdownMenuBox(
+                        expanded = expandedExperience,
+                        onExpandedChange = { expandedExperience = it },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        OutlinedTextField(
+                            value = textExperience,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text(stringResource(id = R.string.label_experience)) },
+                            trailingIcon = {
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedExperience)
+                            },
+                            modifier = Modifier.menuAnchor(),
+                            shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = expandedExperience,
+                            onDismissRequest = { expandedExperience = false }
+                        ) {
+                            experienceOptions.forEach { selectionOption ->
+                                DropdownMenuItem(
+                                    text = { Text(selectionOption) },
+                                    onClick = {
+                                        textExperience = selectionOption
+                                        expandedExperience = false
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
+
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_medium)))
 
                 Text(
@@ -177,6 +223,8 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
 
                 Button(
                     onClick = {
+                        isClicked = true
+
                         val skill1 = if (checkAndroid) "Android " else ""
                         val skill2 = if (checkUiUx) "UI/UX " else ""
                         val skill3 = if (checkWeb) "Web" else ""
@@ -195,7 +243,11 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                         .height(dimensionResource(id = R.dimen.button_height)),
                     shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button)),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.gray_button)
+                        containerColor = if (isClicked) {
+                            colorResource(id = R.color.blue_button)
+                        } else {
+                            colorResource(id = R.color.gray_button)
+                        }
                     )
                 ) {
                     Text(
