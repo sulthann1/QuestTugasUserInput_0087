@@ -69,3 +69,24 @@ fun BiodataScreen(modifier: Modifier = Modifier, snackbarHostState: SnackbarHost
                     color = colorResource(id = R.color.gray_subtitle)
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_large)))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
+                ) {
+                    OutlinedTextField(
+                        value = textNamaDepan,
+                        onValueChange = { textNamaDepan = it },
+                        label = { Text(stringResource(id = R.string.label_nama_depan)) },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
+                    )
+                    OutlinedTextField(
+                        value = textNamaBelakang,
+                        onValueChange = { textNamaBelakang = it },
+                        label = { Text(stringResource(id = R.string.label_nama_belakang)) },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(dimensionResource(id = R.dimen.corner_radius_button))
+                    )
+                }
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_small)))
